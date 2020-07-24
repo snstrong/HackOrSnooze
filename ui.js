@@ -103,8 +103,8 @@ $(async function() {
    * Event handlers for submitting story
    */
   $navSubmit.on("click", function() {
+    hideElements();
     $submitForm.show();
-
   });
 
   $submitForm.on("submit", async function() {
@@ -192,7 +192,7 @@ $(async function() {
     // render story markup
     storyMarkup = $(`
     <li id="${story.storyId}">
-    <i class="fa ${starClass}" aria-hidden="true"></i>  
+    <i class="fa ${starClass} star" aria-hidden="true"></i>  
     <a class="article-link" href="${story.url}" target="a_blank">
         <strong>${story.title}</strong>
       </a>
@@ -224,7 +224,7 @@ $(async function() {
    *****************************************/
 
   // Add stars to HTML
-
+  //
   function addStars() {
     let starClass = "fa-star-o";
     for (let li of $('li')) {
@@ -238,7 +238,7 @@ $(async function() {
   }
   
   
-   // Check If Favorite
+  // Check If Favorite
   //
   function isFavorite(tgt) {
     return tgt.hasClass("fa-star") ?  true :  false;
@@ -246,7 +246,7 @@ $(async function() {
 
   // Event handler for clicks on stars to add/remove favorite
   //
-  $('body').on("click", "i.fa", async function(evt) {
+  $('body').on("click", "i.star", async function(evt) {
     let $tgt = $(evt.target);
     let storyId = String($tgt.parent().attr("id"));
     if (isFavorite($tgt)) {
@@ -266,7 +266,8 @@ $(async function() {
   // View Favorites
   //
   $navFavorites.on("click", function() {
-    $favoriteArticles.html("Favorites");
+    hideElements();
+    $favoriteArticles.html("<h3>Favorites</h3>");
     for (let s of currentUser.favorites) {
         const result = generateStoryHTML(s);
             $favoriteArticles.append(result);
@@ -280,23 +281,37 @@ $(async function() {
    * "My Stories" functionality
    ***********************************************/
 
-   $navMyStories.on("click", async function() {
-    $allStoriesList.hide(); 
+  // Show list of current user stories on click of "My Stories" in nav
+  //
+  $navMyStories.on("click", async function() {
+    hideElements();
+    $allStoriesList.hide();
+    $myStories.html("<h3>My Stories</h3>"); 
     $myStories.show();
      const token = currentUser.loginToken;
      const username = currentUser.username;
      currentUser = await User.getLoggedInUser(token, username);
      for (let s of currentUser.ownStories) {
-       $myStories.append(generateStoryHTML(s));
+       let res = generateStoryHTML(s);
+       res.prepend($('<i class="fa fa-trash trash-can" aria-hidden="true"></i>'));
+       $myStories.append(res);
      }
-   })
+  });
 
+  // Delete story on click
+  //
+  $myStories.on("click", "i.trash-can", async function(evt) {
+    const token = currentUser.loginToken;
+    let $tgt = $(evt.target);
+    let storyId = String($tgt.parent().attr("id"));
+    let storyListInstance = await StoryList.getStories();
+    await storyListInstance.deleteStory(token, storyId);
+    $tgt.parent().remove();
+  });
 
-   
-
+  /////////////////////////////////////////////////////////////////////
 
   /* hide all elements in elementsArr */
-
   function hideElements() {
     const elementsArr = [
       $submitForm,

@@ -58,7 +58,7 @@ class StoryList {
   async deleteStory(token, storyId) {
     await axios.delete(`${BASE_URL}/stories/${storyId}`, {
       params: {
-        token
+        "token" : token
       }
     });
   }
