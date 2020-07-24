@@ -44,9 +44,17 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    // TODO - Implement this functions!
+    // TODO - Implement this function!
     // this function should return the newly created story so it can be used in
     // the script.js file where it will be appended to the DOM
+    let res = await axios.post(`${BASE_URL}/stories`, {
+      "token": user.loginToken,
+      "story": newStory
+    });
+    console.log(res);
+
+    return new Story(res.data.story);
+    
   }
 }
 
@@ -55,6 +63,8 @@ class StoryList {
  * The User class to primarily represent the current user.
  *  There are helper methods to signup (create), login, and getLoggedInUser
  */
+
+// TODO: addFavorite method
 
 class User {
   constructor(userObj) {
@@ -151,6 +161,27 @@ class User {
     existingUser.ownStories = response.data.user.stories.map(s => new Story(s));
     return existingUser;
   }
+
+  /* 
+  * Methods for adding and deleting favorites
+  */
+  async addFavorite(storyId) {
+    await axios.post(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {
+        "token": this.loginToken
+      }
+    );
+    
+  }
+
+  async deleteFavorite(storyId) {
+    await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {
+      params: {
+        "token": this.loginToken
+      }  
+    }
+    );
+  }
+
 }
 
 /**

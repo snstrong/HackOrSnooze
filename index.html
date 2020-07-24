@@ -15,14 +15,26 @@
   <nav>
     <b><a class="nav-link navbar-brand" href="#" id="nav-all">Hack or Snooze</a></b>
     <a class="nav-link nav-right" href="#" id="nav-login">login/create user</a>
+    
     <span class="nav-link nav-right hidden" id="nav-welcome">
       <a href="#" id="nav-user-profile"></a>
     </span>
-    <a class="hidden" id="nav-logout" href="#">
-      <small>(logout)</small>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a class="hidden nav-link" id="nav-submit" href="#">
+      Submit
+    </a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a class="hidden nav-link" id="nav-favorites" href="#">
+      Favorites
+    </a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a class="hidden nav-link" id="nav-logout" href="#">
+      (logout)
     </a>
   </nav>
+  
   <section class="articles-container container">
+    <!-- Form for submitting stories -->
     <form action="" class="hidden" id="submit-form">
       <div>
         <label for="author">author</label>
@@ -39,6 +51,7 @@
       <button type="submit">submit</button>
       <hr>
     </form>
+    
     <article>
       <ol id="all-articles-list" class="articles-list">
         <h3>Loading...</h3>
@@ -98,7 +111,7 @@
       <button type="submit">create account</button>
     </form>
   </section>
-  <section id="user-profile" class="container hidden">
+  <section id="user-profile" class="hidden">
     <h4>User Profile Info</h4>
     <section>
       <div id="profile-name">Name:</div>
@@ -110,6 +123,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
   crossorigin="anonymous"></script>
 <script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://use.fontawesome.com/3c61c06dac.js"></script>
 <script src="api-classes.js"></script>
 <script src="ui.js"></script>
 
