@@ -12,6 +12,7 @@ $(async function() {
   const $navSubmit = $('#nav-submit');
   const $userProfile = $('#user-profile');
   const $navFavorites = $('#nav-favorites');
+  const $navMyStories = $('#nav-my-stories');
   
   // global storyList variable
   let storyList = null;
@@ -291,6 +292,7 @@ $(async function() {
     $navLogOut.show();
     $navSubmit.show();
     $navFavorites.show();
+    $navMyStories.show();
   }
 
   /* simple function to pull the hostname from a URL */
