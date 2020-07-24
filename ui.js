@@ -6,6 +6,8 @@ $(async function() {
   const $favoriteArticles = $("#favorited-articles");
   const $loginForm = $("#login-form");
   const $createAccountForm = $("#create-account-form");
+  // TODO: 
+  // is a double
   const $ownStories = $("#my-articles");
   const $navLogin = $("#nav-login");
   const $navLogOut = $("#nav-logout");
@@ -13,6 +15,7 @@ $(async function() {
   const $userProfile = $('#user-profile');
   const $navFavorites = $('#nav-favorites');
   const $navMyStories = $('#nav-my-stories');
+  // is a double
   const $myStories = $('#my-articles');
   
   // global storyList variable
@@ -277,10 +280,18 @@ $(async function() {
    * "My Stories" functionality
    ***********************************************/
 
-   $navMyStories.on("click", function() {
-     $myStories.show();
-     $allStoriesList.hide();
+   $navMyStories.on("click", async function() {
+    $allStoriesList.hide(); 
+    $myStories.show();
+     const token = currentUser.loginToken;
+     const username = currentUser.username;
+     currentUser = await User.getLoggedInUser(token, username);
+     for (let s of currentUser.ownStories) {
+       $myStories.append(generateStoryHTML(s));
+     }
    })
+
+
    
 
 

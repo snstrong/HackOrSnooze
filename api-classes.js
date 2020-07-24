@@ -44,17 +44,23 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    // TODO - Implement this function!
-    // this function should return the newly created story so it can be used in
-    // the script.js file where it will be appended to the DOM
+    // Returns newly created story so it can be used in
+    // the ui.js file where it will be appended to the DOM
     let res = await axios.post(`${BASE_URL}/stories`, {
       "token": user.loginToken,
       "story": newStory
     });
     console.log(res);
 
-    return new Story(res.data.story);
-    
+    return new Story(res.data.story);  
+  }
+
+  async deleteStory(token, storyId) {
+    await axios.delete(`${BASE_URL}/stories/${storyId}`, {
+      params: {
+        token
+      }
+    });
   }
 }
 
@@ -169,8 +175,7 @@ class User {
     await axios.post(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {
         "token": this.loginToken
       }
-    );
-    
+    );   
   }
 
   async deleteFavorite(storyId) {
@@ -178,8 +183,7 @@ class User {
       params: {
         "token": this.loginToken
       }  
-    }
-    );
+    });
   }
 
 }
