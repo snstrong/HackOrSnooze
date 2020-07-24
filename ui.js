@@ -13,6 +13,7 @@ $(async function() {
   const $userProfile = $('#user-profile');
   const $navFavorites = $('#nav-favorites');
   const $navMyStories = $('#nav-my-stories');
+  const $myStories = $('#my-articles');
   
   // global storyList variable
   let storyList = null;
@@ -270,6 +271,18 @@ $(async function() {
     $favoriteArticles.show();
     $allStoriesList.hide();
   })
+
+
+  /***********************************************
+   * "My Stories" functionality
+   ***********************************************/
+
+   $navMyStories.on("click", function() {
+     $myStories.show();
+     $allStoriesList.hide();
+   })
+   
+
 
   /* hide all elements in elementsArr */
 
