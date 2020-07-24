@@ -275,7 +275,7 @@ $(async function() {
   function hideElements() {
     const elementsArr = [
       $submitForm,
-      $allStoriesList,
+      // $allStoriesList,
       $filteredArticles,
       $ownStories,
       $loginForm,
